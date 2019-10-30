@@ -1,0 +1,60 @@
+C51 COMPILER V9.56.0.0   DAN                                                               02/23/2019 18:17:54 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE DAN
+OBJECT MODULE PLACED IN .\Objects\dan.obj
+COMPILER INVOKED BY: D:\keil u4 c51\C51\BIN\C51.EXE dan.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\d
+                    -an.lst) TABS(2) OBJECT(.\Objects\dan.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          
+   3          typedef  unsigned int u16;
+   4          typedef  unsigned char u8;
+   5          
+   6          
+   7          void UsartInit ()
+   8          {
+   9   1          TMOD=0x20;
+  10   1          TH1=0XF3;
+  11   1          TL1=0XF3;
+  12   1          PCON=0X80;
+  13   1          TR1=1;
+  14   1          SCON=0X50;
+  15   1          ES=1;
+  16   1          EA=1;
+  17   1      }//´®¿Ú³õÊ¼»¯
+  18            
+  19          void main()
+  20          {
+  21   1          UsartInit ();
+  22   1          while(1);
+  23   1      }
+  24          
+  25            
+  26          void  Usart() interrupt 4
+  27          {
+  28   1        u8 receiveData;
+  29   1      
+  30   1        
+  31   1        receiveData=SBUF;
+  32   1        RI=0;
+  33   1        SBUF=receiveData;
+  34   1        while(!TI);
+  35   1        TI=0;
+  36   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     50    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,51 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              01/24/2019 12:48:03 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\keil u4 c51\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #include<intrins.h>
+   3          
+   4          typedef unsigned char u8;
+   5          typedef unsigned int  u16;
+   6          
+   7          #define led P2
+   8          
+   9          void delay (u16 i)
+  10          {
+  11   1        while(i--);
+  12   1      }
+  13          
+  14          void main()
+  15          {
+  16   1        u8 i=0;
+  17   1        led=0xfe;
+  18   1        delay(50000);
+  19   1        while(1)
+  20   1        {
+  21   2          for(i=0;i<7;i++)
+  22   2          {
+  23   3            led=_crol_(led,1);
+  24   3            delay(50000);
+  25   3          }
+  26   2        }
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     51    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
