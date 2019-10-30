@@ -1,0 +1,128 @@
+C51 COMPILER V9.56.0.0   TEMP                                                              01/27/2019 12:53:53 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE TEMP
+OBJECT MODULE PLACED IN .\Objects\temp.obj
+COMPILER INVOKED BY: D:\keil u4 c51\C51\BIN\C51.EXE temp.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -temp.lst) TABS(2) OBJECT(.\Objects\temp.obj)
+
+line level    source
+
+   1          #include <temp.h>
+   2          
+   3          void Delay1ms(u16 y)
+   4          {
+   5   1        u16 x;
+   6   1        for(;y>0;y--)
+   7   1        {
+   8   2          for(x=110;x>0;x--);
+   9   2        }
+  10   1      }
+  11          
+  12          
+  13          
+  14          u8 Ds18b20Init()
+  15          {
+  16   1        u8 i=0;
+  17   1        DSPORT=0;
+  18   1        i=70;
+  19   1        while(i--);//642us
+  20   1        DSPORT=1;
+  21   1        i=0;
+  22   1        while(DSPORT)
+  23   1        {
+  24   2          Delay1ms(1);
+  25   2          i++;
+  26   2          if(i>5)
+  27   2          {
+  28   3            return 0; 
+  29   3          }
+  30   2        }
+  31   1        return 1;
+  32   1      }
+  33          
+  34          
+  35          
+  36          void Ds18b20WriteByte(u8 dat)
+  37          {
+  38   1        u8 i,j;
+  39   1        for(j=0;j<8;j++)
+  40   1        {
+  41   2          DSPORT=0;
+  42   2          i++;
+  43   2          DSPORT=dat&0x01;
+  44   2          i=6;
+  45   2          while(i--);//68us
+  46   2          DSPORT=1;
+  47   2          dat>>=1;
+  48   2        }
+  49   1        
+  50   1      }
+  51          
+  52          u8 Ds18b20ReadByte()
+  53          {
+  54   1        u16 i,j;
+C51 COMPILER V9.56.0.0   TEMP                                                              01/27/2019 12:53:53 PAGE 2   
+
+  55   1        u8 bi,byte;
+  56   1        
+  57   1        for(j=8;j>0;j--)
+  58   1        {
+  59   2          DSPORT=0;
+  60   2          i++;
+  61   2          DSPORT=1;
+  62   2          i++;
+  63   2          i++;
+  64   2          bi=DSPORT;
+  65   2          byte=(byte>>1)|(bi<<7);
+  66   2          i=4;
+  67   2          while(i--);
+  68   2        }
+  69   1        return byte;
+  70   1      }
+  71          
+  72          void Ds18b20ChangeTemp()
+  73          {
+  74   1        Ds18b20Init();
+  75   1        Delay1ms(1);
+  76   1        Ds18b20WriteByte(0xcc);
+  77   1        Ds18b20WriteByte(0x44);
+  78   1      }
+  79          
+  80          
+  81          void Ds18b20ReadTempCom()
+  82          {
+  83   1        Ds18b20Init();
+  84   1        Delay1ms(1);
+  85   1        Ds18b20WriteByte(0xcc);
+  86   1        Ds18b20WriteByte(0xbe);
+  87   1      }
+  88          
+  89          
+  90          int Ds18b20ReadTemp()
+  91          {
+  92   1        int temp=0;
+  93   1        u8 tmh,tm1;
+  94   1        Ds18b20ChangeTemp();
+  95   1        Ds18b20ReadTempCom();
+  96   1        tm1=Ds18b20ReadByte();
+  97   1        tmh=Ds18b20ReadByte();
+  98   1        temp=tmh;
+  99   1        temp<<=8;
+ 100   1        temp|=tm1;
+ 101   1        return temp;
+ 102   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    207    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

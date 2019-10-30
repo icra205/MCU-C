@@ -1,0 +1,125 @@
+C51 COMPILER V9.56.0.0   I2C                                                               02/04/2019 10:53:05 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE I2C
+OBJECT MODULE PLACED IN .\Objects\i2c.obj
+COMPILER INVOKED BY: D:\keil u4 c51\C51\BIN\C51.EXE i2c.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\i
+                    -2c.lst) TABS(2) OBJECT(.\Objects\i2c.obj)
+
+line level    source
+
+   1          #include <i2c.h>
+   2          
+   3          void Delay10us(void)
+   4          {
+   5   1        u8 a,b;
+   6   1        for(b=1;b>0;b--)
+   7   1        for(a=2;a>0;a--);
+   8   1      }
+   9          
+  10          void I2cStart()
+  11          {
+  12   1        SDA=1;
+  13   1        Delay10us();
+  14   1        SCL=1;
+  15   1        Delay10us();
+  16   1        SDA=0;
+  17   1        Delay10us();
+  18   1        SCL=0;
+  19   1        Delay10us();
+  20   1      }
+  21          
+  22          void I2cStop()
+  23          {
+  24   1        SDA=0;
+  25   1        Delay10us();
+  26   1        SCL=1;
+  27   1        Delay10us();
+  28   1        SDA=1;
+  29   1        Delay10us();
+  30   1      }
+  31          
+  32          u8 I2cSendByte(u8 dat)
+  33          {
+  34   1        u8 a=0,b;
+  35   1        for(a=0;a<8;a++)
+  36   1        {
+  37   2          SDA=dat>>7;
+  38   2          dat=dat<<1;
+  39   2          Delay10us();
+  40   2          SCL=1;
+  41   2          Delay10us();
+  42   2          SCL=0;
+  43   2          Delay10us();
+  44   2        }
+  45   1        SDA=1;
+  46   1        Delay10us();
+  47   1        SCL=1;
+  48   1        while(SDA)
+  49   1        {
+  50   2          b++;
+  51   2          if(b>200)
+  52   2          {
+  53   3            SCL=0;
+  54   3            Delay10us();
+C51 COMPILER V9.56.0.0   I2C                                                               02/04/2019 10:53:05 PAGE 2   
+
+  55   3            return 0;
+  56   3          }
+  57   2        }
+  58   1        SCL=0;
+  59   1        Delay10us();
+  60   1        return 1;
+  61   1      }
+  62          
+  63          u8 I2cReadByte()
+  64          {
+  65   1        u8 a=0,dat=0;
+  66   1        for(a=0;a<8;a++)
+  67   1        {
+  68   2          SCL=1;
+  69   2          Delay10us();
+  70   2          dat<<=1;
+  71   2          dat|=SDA;
+  72   2          Delay10us();
+  73   2          SCL=0;
+  74   2          Delay10us();
+  75   2        }
+  76   1        return dat;
+  77   1      }
+  78          
+  79          void At24c02Write(u8 addr,u8 dat)
+  80          {
+  81   1        I2cStart();
+  82   1        I2cSendByte(0xa0);
+  83   1        I2cSendByte(addr);
+  84   1        I2cSendByte(dat);
+  85   1        I2cStop();
+  86   1      }
+  87          
+  88          u8 At24c02Read(u8 addr)
+  89          {
+  90   1        u8 num;
+  91   1        I2cStart();
+  92   1        I2cSendByte(0xa0);
+  93   1        I2cSendByte(addr);
+  94   1        I2cStart();
+  95   1        I2cSendByte(0xa1);
+  96   1        num=I2cReadByte();
+  97   1        I2cStop();
+  98   1        return num;
+  99   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    197    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
