@@ -1,0 +1,157 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        01/30/2019  11:58:23  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL U4 C51\C51\BIN\BL51.EXE .\Objects\main.obj TO .\Objects\main PRINT (.\Listings\main.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  D:\KEIL U4 C51\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\main (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         ?DT?MAIN
+                    000EH     0012H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         ?BI?MAIN
+                    0020H.1   0000H.7                *** GAP ***
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0018H                  *** GAP ***
+            CODE    001BH     0003H     ABSOLUTE     
+                    001EH     07E2H                  *** GAP ***
+            CODE    0800H     0060H     UNIT         ?PR?MAIN?MAIN
+            CODE    0860H     001BH     UNIT         ?PR?TIME1?MAIN
+            CODE    087BH     0010H     UNIT         ?PR?TIME1INIT?MAIN
+            CODE    088BH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\main (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN
+  +--> ?PR?TIME1INIT?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\main (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/30/2019  11:58:23  PAGE 2
+
+
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:0008H         PUBLIC        value
+  C:0800H         PUBLIC        main
+  D:000AH         PUBLIC        count
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0860H         PUBLIC        Time1
+  B:00A8H.3       PUBLIC        ET1
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  D:000CH         PUBLIC        timer1
+  B:0088H.6       PUBLIC        TR1
+  C:087BH         PUBLIC        Time1Init
+  B:0020H.0       PUBLIC        DIR
+  D:00C8H         PUBLIC        T2CON
+  B:00A0H.1       PUBLIC        PWN
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          TIME1INIT
+  C:087BH         LINE#         11
+  C:087BH         LINE#         12
+  C:087BH         LINE#         13
+  C:087EH         LINE#         15
+  C:0881H         LINE#         16
+  C:0884H         LINE#         18
+  C:0886H         LINE#         19
+  C:0888H         LINE#         20
+  C:088AH         LINE#         21
+  -------         ENDPROC       TIME1INIT
+  -------         PROC          MAIN
+  C:0800H         LINE#         23
+  C:0800H         LINE#         24
+  C:0800H         LINE#         25
+  C:0803H         LINE#         26
+  C:0803H         LINE#         27
+  C:0803H         LINE#         28
+  C:080EH         LINE#         29
+  C:080EH         LINE#         30
+  C:0813H         LINE#         31
+  C:0816H         LINE#         32
+  C:0816H         LINE#         33
+  C:081EH         LINE#         34
+  C:081EH         LINE#         35
+  C:0821H         LINE#         36
+  C:0821H         LINE#         37
+  C:0829H         LINE#         38
+  C:0829H         LINE#         40
+  C:0833H         LINE#         41
+  C:0833H         LINE#         42
+  C:0835H         LINE#         43
+  C:0835H         LINE#         44
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/30/2019  11:58:23  PAGE 3
+
+
+  C:083BH         LINE#         45
+  C:083BH         LINE#         46
+  C:083DH         LINE#         47
+  C:083DH         LINE#         49
+  C:0848H         LINE#         50
+  C:0848H         LINE#         51
+  C:084DH         LINE#         52
+  C:084DH         LINE#         53
+  C:0858H         LINE#         54
+  C:0858H         LINE#         55
+  C:085AH         LINE#         56
+  C:085CH         LINE#         58
+  C:085CH         LINE#         59
+  C:085EH         LINE#         60
+  C:085EH         LINE#         61
+  C:085EH         LINE#         62
+  -------         ENDPROC       MAIN
+  -------         PROC          TIME1
+  C:0860H         LINE#         66
+  C:0862H         LINE#         68
+  C:0865H         LINE#         69
+  C:0868H         LINE#         70
+  C:0870H         LINE#         71
+  C:0878H         LINE#         72
+  -------         ENDPROC       TIME1
+  -------         ENDMOD        MAIN
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 008EH BYTE ( 6%) *
+******************************************************************************
+
+Program Size: data=15.1 xdata=0 code=157
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

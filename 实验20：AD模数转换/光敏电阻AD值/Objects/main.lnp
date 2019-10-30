@@ -1,0 +1,4 @@
+".\Objects\main.obj",
+".\Objects\XPT2046.obj" 
+TO ".\Objects\main" 
+PRINT(".\Listings\main.m51") RAMSIZE(256) 

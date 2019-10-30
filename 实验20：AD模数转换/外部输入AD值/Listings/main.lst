@@ -1,0 +1,98 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              01/29/2019 15:40:26 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\keil u4 c51\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <XPT2046.h>
+   3          
+   4          
+   5          
+   6          sbit LSA=P2^2;
+   7          sbit LSB=P2^3;
+   8          sbit LSC=P2^4;
+   9          
+  10          u8 disp[4];
+  11          u8 code smgduan[]={0x3f,0x06,0x5b, 0x4f , 0x66 , 0x6d ,0x7d , 0x07 , 0x7f  , 0x6f , 0x77 , 0x7c ,0x39 , 0x
+             -5e , 0x79 , 0x71 , 0x00};
+  12          //0~9 A~D ???
+  13          
+  14          void delay(u16 i)
+  15          {
+  16   1        while(i--);
+  17   1      }
+  18          
+  19          
+  20          void datapros()
+  21          {
+  22   1        u16 temp;
+  23   1        static u8 i;
+  24   1        if(i==50)
+  25   1        {
+  26   2          i=0;
+  27   2          temp = Read_AD_Data(0x94);
+  28   2        }
+  29   1        i++;
+  30   1        disp[0]=smgduan[temp/1000];
+  31   1        disp[1]=smgduan[temp%1000/100];
+  32   1        disp[2]=smgduan[temp%1000%100/10];
+  33   1        disp[3]=smgduan[temp%1000%100%10];
+  34   1        
+  35   1      }
+  36          
+  37          
+  38          void DigDisplay()
+  39          {
+  40   1        u8 i;
+  41   1        for(i=0;i<4;i++)
+  42   1        {
+  43   2          switch(i)
+  44   2          {
+  45   3            case 0:
+  46   3                  LSA=0;LSB=0;LSC=0;break;//?????
+  47   3            case 1:
+  48   3                  LSA=1;LSB=0;LSC=0;break;//?????
+  49   3            case 2:
+  50   3                  LSA=0;LSB=1;LSC=0;break;//???
+  51   3            case 3:
+  52   3                  LSA=1;LSB=1;LSC=0;break;//???
+  53   3            
+C51 COMPILER V9.56.0.0   MAIN                                                              01/29/2019 15:40:26 PAGE 2   
+
+  54   3          } 
+  55   2          P0=disp[3-i];
+  56   2          delay(100);//?????50???
+  57   2          P0=0x00;//??
+  58   2          
+  59   2        }
+  60   1      }
+  61          
+  62          
+  63          
+  64          void main()
+  65          {
+  66   1        while(1)
+  67   1        {
+  68   2          datapros();
+  69   2          DigDisplay();
+  70   2        }
+  71   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    232    ----
+   CONSTANT SIZE    =     17    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
